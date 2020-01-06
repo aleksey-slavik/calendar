@@ -1,7 +1,10 @@
 package com.itos.calendar.utils;
 
 
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+
 import org.threeten.bp.LocalDate;
+import org.threeten.bp.format.DateTimeFormatter;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -28,5 +31,9 @@ public class DateUtils {
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH) + 1,
                 calendar.get(Calendar.DAY_OF_MONTH));
+    }
+
+    public static String getFormattedDate(CalendarDay day) {
+        return day.getDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy"));
     }
 }

@@ -1,5 +1,6 @@
 package com.itos.calendar;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,8 @@ import android.view.View;
 
 import com.itos.calendar.event.CalendarEventDecorator;
 import com.itos.calendar.utils.DateUtils;
+import com.itos.calendar.utils.IntentData;
+import com.itos.calendar.view.NotePreviewActivity;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
@@ -40,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
         addEventButton = findViewById(R.id.addEvent);
 
         calendarView.setShowOtherDates(MaterialCalendarView.SHOW_ALL);
-        addEventButton.setOnClickListener((View view) -> addEventRange(view));
+        calendarView.setOnDateChangedListener((MaterialCalendarView widget, CalendarDay day, boolean selected) -> showNotePreview(widget, day));
+        addEventButton.setOnClickListener(this::addEventRange);
 
         // add saved events
         showEventDays();
@@ -49,6 +53,12 @@ public class MainActivity extends AppCompatActivity {
     private void addEventRange(View view) {
         Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
+    }
+
+    private void showNotePreview(View view, CalendarDay day) {
+        Intent intent = new Intent(this, NotePreviewActivity.class);
+        intent.putExtra(IntentData.CALENDAR_DAY, day);
+        startActivity(intent);
     }
 
     private void showEventDays() {
