@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.itos.calendar.MainActivity">
 
-    <com.applandeo.materialcalendarview.CalendarView
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
