@@ -13,18 +13,9 @@ public class DateUtils {
 
     public static final long MILLIS_PER_DAY = 86400000L;
 
-    public static boolean isSameDay(long date1, long date2) {
-        date1 /= MILLIS_PER_DAY;
-        date2 /= MILLIS_PER_DAY;
-        return date1 == date2;
-    }
-
-    public static long addDay(long date, int count) {
-        return date + count * MILLIS_PER_DAY;
-    }
-
     public static LocalDate getLocaleDate(long date) {
         Calendar calendar = Calendar.getInstance();
+        date -= date % MILLIS_PER_DAY;
         calendar.setTime(new Date(date));
 
         return LocalDate.of(
@@ -40,6 +31,8 @@ public class DateUtils {
     public static long toLong(LocalDate localDate) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(localDate.getYear(), localDate.getMonthValue() - 1, localDate.getDayOfMonth());
-        return calendar.getTimeInMillis();
+        long timeInMillis = calendar.getTimeInMillis();
+        timeInMillis -= timeInMillis % MILLIS_PER_DAY;
+        return timeInMillis;
     }
 }

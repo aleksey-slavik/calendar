@@ -34,6 +34,5 @@ public class CalendarEventDecorator implements DayViewDecorator {
     @Override
     public void decorate(DayViewFacade view) {
         view.setSelectionDrawable(context.getDrawable(drawable));
-        view.addSpan(new ForegroundColorSpan(Color.WHITE));
     }
 }

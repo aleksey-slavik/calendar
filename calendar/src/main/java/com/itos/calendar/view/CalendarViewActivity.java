@@ -10,6 +10,7 @@ import android.view.View;
 import com.itos.calendar.R;
 import com.itos.calendar.db.CalendarDatabaseHelper;
 import com.itos.calendar.entity.DayRecord;
+import com.itos.calendar.entity.DayType;
 import com.itos.calendar.event.CalendarEventDecorator;
 import com.itos.calendar.utils.DateUtils;
 import com.itos.calendar.utils.Constants;
@@ -58,42 +59,16 @@ public class CalendarViewActivity extends AppCompatActivity {
     private void showEventDays() {
         CalendarDatabaseHelper databaseHelper = CalendarDatabaseHelper.getInstance(this);
         List<DayRecord> dayRecords = databaseHelper.getAllDayRecords();
-        List<CalendarDay> leftDays = new ArrayList<>();
-        List<CalendarDay> rightDays = new ArrayList<>();
-        List<CalendarDay> innerDays = new ArrayList<>();
+        List<CalendarDay> markDays = new ArrayList<>();
 
         for (DayRecord currentDate : dayRecords) {
-            LocalDate current = DateUtils.getLocaleDate(currentDate.getDate());
-            boolean right = false;
-            boolean left = false;
-
-
-            for (DayRecord otherDate : dayRecords) {
-                LocalDate other = DateUtils.getLocaleDate(otherDate.getDate());
-
-                if (current.isEqual(other.plusDays(1))) {
-                    left = true;
-                }
-
-                if (other.isEqual(current.plusDays(1))) {
-                    right = true;
-                }
-
+            if (currentDate.getDayType() == DayType.CRITICAL) {
+                LocalDate current = DateUtils.getLocaleDate(currentDate.getDate());
+                markDays.add(CalendarDay.from(current));
             }
-
-            if (left && right) {
-                innerDays.add(CalendarDay.from(current));
-            } else if (left) {
-                leftDays.add(CalendarDay.from(current));
-            } else if (right) {
-                rightDays.add(CalendarDay.from(current));
-            }
-
         }
 
-        decorate(innerDays, R.drawable.ic_range_inner);
-        decorate(leftDays, R.drawable.ic_range_left_border);
-        decorate(rightDays, R.drawable.ic_range_right_border);
+        decorate(markDays, R.drawable.ic_day_marker);
 
     }
 
