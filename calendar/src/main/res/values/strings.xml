@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Calendar</string>
     <string name="add_event">Add new event</string>
-    <string name="empty_note">Click \'Edit\' to write a note</string>
+    <string name="empty_note">Click here to write a note</string>
     <string name="edit">Edit</string>
+    <string name="critical_switch">Is critical</string>
 </resources>

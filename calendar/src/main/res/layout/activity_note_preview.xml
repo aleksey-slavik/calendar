@@ -6,19 +6,47 @@
     android:layout_height="match_parent"
     tools:context="com.itos.calendar.view.NotePreviewActivity">
 
-    <TextView
+    <Switch
+        android:id="@+id/critical_switch"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:minHeight="10dp"
+        android:text="@string/critical_switch"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <SeekBar
+        android:id="@+id/critical_value"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:max="5"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/critical_switch"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <EditText
         android:id="@+id/note_preview"
+        android:inputType="textMultiLine"
+        android:lines="8"
+        android:minLines="6"
+        android:maxLines="10"
+        android:scrollbars="vertical"
+        android:gravity="top|start"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:hint="@string/empty_note"
         android:textSize="24sp"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:background="@null"
+        app:layout_constraintTop_toBottomOf="@id/critical_value"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/addNoteButton"
+        android:id="@+id/editNoteButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/edit"

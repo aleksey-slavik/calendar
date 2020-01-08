@@ -5,6 +5,8 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.format.DateTimeFormatter;
+import org.threeten.bp.temporal.ChronoField;
+import org.threeten.bp.temporal.TemporalField;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -35,5 +37,12 @@ public class DateUtils {
 
     public static String getFormattedDate(CalendarDay day) {
         return day.getDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy"));
+    }
+
+    public static long toLong(LocalDate localDate) {
+        Calendar calendar = Calendar.getInstance();
+        Date date = new Date(localDate.getYear(), localDate.getMonthValue(), localDate.getDayOfMonth());
+        calendar.setTime(date);
+        return calendar.getTimeInMillis() / MILLIS_PER_DAY;
     }
 }
