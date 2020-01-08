@@ -64,6 +64,7 @@ public class NotePreviewActivity extends AppCompatActivity {
     private void loadDayData() {
         CalendarDatabaseHelper databaseHelper = CalendarDatabaseHelper.getInstance(this);
         DayRecord dayRecord = databaseHelper.getDayRecordByDate(DateUtils.toLong(date));
+
         if (dayRecord != null) {
             note.setText(dayRecord.getNote(), TextView.BufferType.EDITABLE);
 

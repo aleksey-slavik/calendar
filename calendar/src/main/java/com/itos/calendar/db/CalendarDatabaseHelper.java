@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.itos.calendar.entity.DayRecord;
 import com.itos.calendar.entity.DayType;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CalendarDatabaseHelper extends SQLiteOpenHelper {
+
+    private static final String TAG = "CalendarDatabaseHelper";
 
     private static final String CREATE_DATE_TABLE =
             String.format("CREATE TABLE %s (%s LONG PRIMARY KEY, %s TEXT, %s INTEGER, %s INTEGER);",
@@ -78,6 +81,8 @@ public class CalendarDatabaseHelper extends SQLiteOpenHelper {
                 dayRecord.setDayType(DayType.values()[cursor.getInt(cursor.getColumnIndex(Constants.KEY_DAY_TYPE))]);
                 dayRecord.setValue(cursor.getInt(cursor.getColumnIndex(Constants.KEY_DAY_VALUE)));
             }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
@@ -104,6 +109,8 @@ public class CalendarDatabaseHelper extends SQLiteOpenHelper {
                     dayRecords.add(dayRecord);
                 } while (cursor.moveToNext());
             }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
@@ -144,6 +151,8 @@ public class CalendarDatabaseHelper extends SQLiteOpenHelper {
                         dayId = cursor.getLong(0);
                         db.setTransactionSuccessful();
                     }
+                } catch (Exception e) {
+                    Log.e(TAG, e.getMessage());
                 } finally {
                     if (cursor != null && !cursor.isClosed()) {
                         cursor.close();
@@ -153,6 +162,8 @@ public class CalendarDatabaseHelper extends SQLiteOpenHelper {
                 db.insertOrThrow(Constants.TABLE_DAY, null, values);
                 db.setTransactionSuccessful();
             }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
         } finally {
             db.endTransaction();
         }

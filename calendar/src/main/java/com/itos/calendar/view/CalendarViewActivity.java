@@ -10,7 +10,6 @@ import android.view.View;
 import com.itos.calendar.R;
 import com.itos.calendar.db.CalendarDatabaseHelper;
 import com.itos.calendar.entity.DayRecord;
-import com.itos.calendar.entity.DayType;
 import com.itos.calendar.event.CalendarEventDecorator;
 import com.itos.calendar.utils.DateUtils;
 import com.itos.calendar.utils.Constants;
@@ -68,31 +67,28 @@ public class CalendarViewActivity extends AppCompatActivity {
             boolean right = false;
             boolean left = false;
 
-            if (currentDate.getDayType() == DayType.CRITICAL) {
-                for (DayRecord otherDate : dayRecords) {
-                    if (otherDate.getDayType() == DayType.CRITICAL) {
-                        if (DateUtils.isSameDay(
-                                currentDate.getDate(),
-                                DateUtils.addDay(otherDate.getDate(), 1))) {
-                            left = true;
-                        }
 
-                        if (DateUtils.isSameDay(
-                                DateUtils.addDay(currentDate.getDate(), 1),
-                                otherDate.getDate())) {
-                            right = true;
-                        }
-                    }
+            for (DayRecord otherDate : dayRecords) {
+                LocalDate other = DateUtils.getLocaleDate(otherDate.getDate());
+
+                if (current.isEqual(other.plusDays(1))) {
+                    left = true;
                 }
 
-                if (left && right) {
-                    innerDays.add(CalendarDay.from(current));
-                } else if (left) {
-                    leftDays.add(CalendarDay.from(current));
-                } else if (right) {
-                    rightDays.add(CalendarDay.from(current));
+                if (other.isEqual(current.plusDays(1))) {
+                    right = true;
                 }
+
             }
+
+            if (left && right) {
+                innerDays.add(CalendarDay.from(current));
+            } else if (left) {
+                leftDays.add(CalendarDay.from(current));
+            } else if (right) {
+                rightDays.add(CalendarDay.from(current));
+            }
+
         }
 
         decorate(innerDays, R.drawable.ic_range_inner);
